@@ -934,7 +934,6 @@ QString QgsGdalProvider::generateBandName( int bandNumber ) const
   GDALRasterBandH myGdalBand = getBand( bandNumber );
   QString val(GDALGetDescription(myGdalBand));
   if ( !val.isEmpty() ) {
-      delete myGdalBand;
       return val;
   }
   delete myGdalBand;
