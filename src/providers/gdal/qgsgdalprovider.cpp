@@ -56,6 +56,7 @@
 #include <QDebug>
 
 #include <gdalwarper.h>
+#include <gdal.h>
 #include <ogr_srs_api.h>
 #include <cpl_conv.h>
 #include <cpl_string.h>
@@ -929,6 +930,15 @@ QString QgsGdalProvider::generateBandName( int bandNumber ) const
   QMutexLocker locker( mpMutex );
   if ( !const_cast<QgsGdalProvider *>( this )->initIfNeeded() )
     return QString();
+
+  GDALRasterBandH myGdalBand = getBand( bandNumber );
+  QString val(GDALGetDescription(myGdalBand));
+  if ( !val.isEmpty() ) {
+      delete myGdalBand;
+      return val;
+  }
+  delete myGdalBand;
+  delete val;
 
   if ( strcmp( GDALGetDriverShortName( GDALGetDatasetDriver( mGdalDataset ) ), "netCDF" ) == 0 || strcmp( GDALGetDriverShortName( GDALGetDatasetDriver( mGdalDataset ) ), "GTiff" ) == 0 )
   {
