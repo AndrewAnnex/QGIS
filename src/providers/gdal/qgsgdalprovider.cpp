@@ -936,8 +936,6 @@ QString QgsGdalProvider::generateBandName( int bandNumber ) const
   if ( !val.isEmpty() ) {
       return val;
   }
-  delete myGdalBand;
-  delete val;
 
   if ( strcmp( GDALGetDriverShortName( GDALGetDatasetDriver( mGdalDataset ) ), "netCDF" ) == 0 || strcmp( GDALGetDriverShortName( GDALGetDatasetDriver( mGdalDataset ) ), "GTiff" ) == 0 )
   {
